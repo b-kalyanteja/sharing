@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1 #for networking
+kind: Ingress
+metadata:
+  name: my-task-app-ingress-networking
+spec:
+  rules:
+    - host: 79.184.222.84 # My current Dynamic IP as i do not have any static IP connected.
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: my-task-app-service
+                port:
+                  number: 8080

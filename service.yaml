@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-task-app-nodeport
+spec:
+  selector:
+    app: my-task-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: NodePort # for local running only and to make other pods use thois nodeport
+
+---
+# Second Service to create load balancer so, it hosts in Localhost (IP or DNS is not available)
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-task-app-lb-service
+spec:
+  selector:
+    app: my-task-app
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+  type: LoadBalancer 

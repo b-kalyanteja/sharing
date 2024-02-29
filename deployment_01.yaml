@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-task-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: my-task-app
+  template:
+    metadata:
+      labels:
+        app: my-task-app
+    spec:
+      containers:
+        - name: my-task-app-container
+          image: my-task-app:latest #tag latest is used
+          imagePullPolicy: Never # i want to pull it from local docker rgistry, not from net
+          ports:
+            - containerPort: 8080

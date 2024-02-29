@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-task-app
+spec:
+  replicas: 3 # 3 replicas initiaated
+  selector:
+    matchLabels:
+      app: my-task-app
+  template:
+    metadata:
+      labels:
+        app: my-task-app
+    spec:
+      containers:
+      - name: my-task-app-ctr
+        image: my-task-app:latest
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 30
+---
+
